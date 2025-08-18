@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native'
 
-const HomeScreen = () => {
+const HomeScreen = ({tasks}) => {
   return (
     <View>
       <Text>HomeScreen</Text>
