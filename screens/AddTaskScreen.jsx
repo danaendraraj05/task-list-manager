@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { StyleSheet, View, ScrollView, Platform } from 'react-native';
 import { TextInput, Button, Card, Text } from 'react-native-paper';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const AddTaskScreen = () => {
+const AddTaskScreen = ({ navigation, onAddTask }) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [date, setDate] = useState(new Date());
@@ -15,17 +16,38 @@ const AddTaskScreen = () => {
     setDate(currentDate);
   };
 
-  const handleAddTask = () => {
-    if (!title.trim()) {
-      alert('Please enter a title');
-      return;
-    }
-    console.log({
-      title,
-      description,
-      date: date.toDateString(),
-    });
+const handleAddTask = async () => {
+  if (!title.trim()) {
+    alert('Please enter a title');
+    return;
+  }
+
+  const newTask = {
+    id: Date.now().toString(),
+    title,
+    description,
+    date: date.toDateString(),
+    isComplete: false,
   };
+
+  try {
+    const storedTasks = await AsyncStorage.getItem('tasks');
+    const parsedTasks = storedTasks ? JSON.parse(storedTasks) : [];
+    const updatedTasks = [...parsedTasks, newTask];
+
+    await AsyncStorage.setItem('tasks', JSON.stringify(updatedTasks));
+
+    onAddTask(newTask); // still update parent state
+    setTitle('');
+    setDescription('');
+    setDate(new Date());
+
+  } catch (error) {
+    console.error('Error saving task:', error);
+  }
+};
+
+
 
   return (
     <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled">
