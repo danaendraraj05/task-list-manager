@@ -1,13 +1,28 @@
-import { StyleSheet, Text, View } from 'react-native'
+import React from 'react';
+import { View, Text, FlatList, StyleSheet } from 'react-native';
+import TaskItem from '../components/TaskItem';
 
-const HomeScreen = ({tasks}) => {
+const HomeScreen = ({ tasks }) => {
   return (
-    <View>
-      <Text>HomeScreen</Text>
+    <View style={styles.container}>
+      <FlatList
+        data={tasks}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={({ item }) => (
+          <TaskItem
+            date={item.date}
+            title={item.title}
+            description={item.description}
+            id={item.id}
+          />
+        )}
+      />
     </View>
-  )
-}
+  );
+};
 
-export default HomeScreen
+const styles = StyleSheet.create({
 
-const styles = StyleSheet.create({})
+});
+
+export default HomeScreen;
