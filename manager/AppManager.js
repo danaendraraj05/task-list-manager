@@ -6,10 +6,9 @@ import { AppScreens, DUMMY_TASK } from '../utils/constants';
 
 const AppManager = () => {
   const [CurrentScreen, setCurrentScreen] = useState(AppScreens.HomeScreen);
-  const [Tasks, setTasks] = useState(DUMMY_TASK);
+  const [Tasks, setTasks] = useState([...DUMMY_TASK]);
   return (
     <View>
-      <Text>AppManager</Text>
       {CurrentScreen === AppScreens.AddTaskScreen ? ( 
         <AddTaskScreen/>)
         :
