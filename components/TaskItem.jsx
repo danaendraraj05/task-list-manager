@@ -1,23 +1,18 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
-import { Card, Text, Button } from 'react-native-paper';
+import { StyleSheet, View } from 'react-native';
+import { Card, Text, Button, Chip } from 'react-native-paper';
 
-const TaskItem = ({ title, description, date, onDelete, onComplete }) => {
+const TaskItem = ({ title, description, date, onDelete, onComplete, isComplete }) => {
   return (
     <Card style={styles.card}>
       <Card.Title title={title} />
       <Card.Content>
-        <Text variant="bodyMedium">{description}</Text>
+        <View style={styles.contentRow}>
+          <Text variant="bodyMedium">{description}</Text>
+        </View>
         <Text style={styles.date}>{date}</Text>
       </Card.Content>
-      <Card.Actions
-        style={{
-          width: "100%",
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-between",
-        }}
-      >
+      <Card.Actions style={styles.actions}>
         <Button
           mode="outlined"
           style={{ marginRight: 'auto' }}
@@ -25,9 +20,12 @@ const TaskItem = ({ title, description, date, onDelete, onComplete }) => {
         >
           Delete
         </Button>
-        <Button mode="contained" onPress={onComplete}>
-          Complete
-        </Button>
+        {!isComplete && (
+          <Button mode="contained" onPress={onComplete}>
+            Complete
+          </Button>
+        )}
+        {isComplete && <Chip style={styles.chip} icon="check" mode="outlined">Completed</Chip>}
       </Card.Actions>
     </Card>
   );
@@ -40,11 +38,24 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     elevation: 3,
   },
+  contentRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 8,
+  },
+  chip: {
+    marginLeft: 8,
+  },
   date: {
     fontSize: 12,
     color: '#888',
-    marginTop: 8,
     textAlign: 'right',
+  },
+  actions: {
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
 });
 

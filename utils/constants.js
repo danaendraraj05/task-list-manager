@@ -9,7 +9,7 @@ export const DUMMY_TASK = [
     title: "Complete Project Proposal",
     description: "Write and submit the initial project proposal document.",
     date: "2025-08-20",
-    isComplete: false,
+    isComplete: true,
   },
   {
     id: 2,

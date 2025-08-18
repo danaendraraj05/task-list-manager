@@ -13,6 +13,7 @@ const HomeScreen = ({ tasks }) => {
             date={item.date}
             title={item.title}
             description={item.description}
+            isComplete={item.isComplete}
             id={item.id}
           />
         )}
