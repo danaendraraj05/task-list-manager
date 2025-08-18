@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, FlatList, StyleSheet } from 'react-native';
 import TaskItem from '../components/TaskItem';
 
-const HomeScreen = ({ tasks }) => {
+const HomeScreen = ({ tasks, onDelete , onComplete }) => {
   return (
     <View style={styles.container}>
       <FlatList
@@ -15,6 +15,8 @@ const HomeScreen = ({ tasks }) => {
             description={item.description}
             isComplete={item.isComplete}
             id={item.id}
+            onDelete={() => onDelete(item.id)}
+            onComplete={() => onComplete(item.id)}
           />
         )}
       />
